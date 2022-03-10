@@ -1,5 +1,7 @@
 package com.sangjin.lotto
 
+import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -22,8 +24,8 @@ class MainActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.percentage)
     }
 
-    private val runBtn by lazy {
-        findViewById<Button>(R.id.runBtn)
+    private val randomBtn by lazy {
+        findViewById<Button>(R.id.randomBtn)
     }
 
     private val addBtn by lazy {
@@ -36,6 +38,14 @@ class MainActivity : AppCompatActivity() {
 
     private val clearBtn by lazy {
         findViewById<Button>(R.id.clearBtn)
+    }
+
+    private val resultButton by lazy {
+        findViewById<Button>(R.id.percentageBtn)
+    }
+
+    private val webBtn by lazy {
+        findViewById<Button>(R.id.webBtn)
     }
 
     private val pickerNumberList = mutableSetOf<Int>()
@@ -61,25 +71,27 @@ class MainActivity : AppCompatActivity() {
             minValue = 1
             maxValue = 45
         }
-
         initRunButton()
         initAddButton()
         initClearButton()
+        percentageNumber()
 
+        webBtn.setOnClickListener {
+            var intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://dhlottery.co.kr/gameResult.do?method=byWin"))
+            startActivity(intent)
+        }
     }
 
     private fun initRunButton() {
-        runBtn.setOnClickListener {  //6개의 숫자를 생성해서 리스트에 넣는다. 그리고 그 리스트의 값들을 각각의 텍스트뷰에 넣는다.
+        randomBtn.setOnClickListener {  //6개의 숫자를 생성해서 리스트에 넣는다. 그리고 그 리스트의 값들을 각각의 텍스트뷰에 넣는다.
             val list = getRandomNumber()
             didRun = true
             list.forEachIndexed { index, number ->
                 numberTextViewList[index].text = number.toString()
                 numberTextViewList[index].isVisible = true
-                setBackground(number,numberTextViewList[index])
+                setBackground(number, numberTextViewList[index])
             }
-            percentageNumber(list)
         }
-
     }
 
     private fun initClearButton() {
@@ -111,14 +123,12 @@ class MainActivity : AppCompatActivity() {
 
             val textView = numberTextViewList[pickerNumberList.size]
             textView.isVisible = true
-            var numberPickerValue = numberPicker.value
+            val numberPickerValue = numberPicker.value
             textView.text = numberPickerValue.toString()
             setBackground(numberPickerValue, textView)
 
             pickerNumberList.add(numberPicker.value)
-            percentageNumber(pickerNumberList.toList())
         }
-
     }
 
     private fun getRandomNumber(): List<Int> {
@@ -134,28 +144,28 @@ class MainActivity : AppCompatActivity() {
         return newList.sorted() //그 새로운 리스트를 반환한다.
     }
 
-    private fun setBackground(number:Int, textView:TextView) {
-        when(number) {
-            in 1..9 -> textView.background = ContextCompat.getDrawable(this, R.drawable.circle_blue)
-            in 10..18 -> textView.background = ContextCompat.getDrawable(this, R.drawable.circle_green)
-            in 19..27 -> textView.background = ContextCompat.getDrawable(this, R.drawable.circle_gray)
-            in 28..36 -> textView.background = ContextCompat.getDrawable(this, R.drawable.circle_red)
-            in 37..45 -> textView.background = ContextCompat.getDrawable(this, R.drawable.circle_yellow)
+    private fun setBackground(number: Int, textView: TextView) {
+        when (number) {
+            in 1..10 -> textView.background = ContextCompat.getDrawable(this, R.drawable.circle_blue)
+            in 11..20 -> textView.background =
+                ContextCompat.getDrawable(this, R.drawable.circle_green)
+            in 21..30 -> textView.background =
+                ContextCompat.getDrawable(this, R.drawable.circle_gray)
+            in 31..40 -> textView.background =
+                ContextCompat.getDrawable(this, R.drawable.circle_red)
+            in 41..45 -> textView.background =
+                ContextCompat.getDrawable(this, R.drawable.circle_yellow)
         }
     }
 
-    private fun percentageNumber(list:List<Int>) {
-        var random = Random().nextInt(10000).toDouble()
-        var randomDouble = random / 100
-
-        if(list.size == 6) {
+    private fun percentageNumber() {
+        val random = Random().nextInt(10000).toDouble()
+        val randomDouble = random / 100
+        resultButton.setOnClickListener {
             percentage.text = "당첨될 확률: $randomDouble %"
             percentage.isVisible = true
         }
-
     }
-
-
 }
 
 

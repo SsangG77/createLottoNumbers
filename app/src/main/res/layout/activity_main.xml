@@ -20,11 +20,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:layout_marginEnd="16dp"
         android:text="@string/addNumber"
-        app:layout_constraintEnd_toStartOf="@id/clearBtn"
-        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintEnd_toStartOf="@id/randomBtn"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/numberPicker" />
+
+    <Button
+        android:id="@+id/randomBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="@string/autoAppear"
+        app:layout_constraintEnd_toStartOf="@id/clearBtn"
+        app:layout_constraintStart_toEndOf="@id/addNumber"
         app:layout_constraintTop_toBottomOf="@id/numberPicker" />
 
     <Button
@@ -34,10 +42,11 @@
         android:layout_marginTop="15dp"
         android:text="@string/clear"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/addNumber"
+        app:layout_constraintStart_toEndOf="@id/randomBtn"
         app:layout_constraintTop_toBottomOf="@id/numberPicker" />
 
     <LinearLayout
+        android:animateLayoutChanges="true"
         android:id="@+id/numberList"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -49,84 +58,84 @@
         app:layout_constraintTop_toBottomOf="@id/addNumber">
 
         <TextView
-            android:gravity="center"
-            android:textColor="@color/white"
-            android:background="@drawable/circle_blue"
             android:id="@+id/firstNumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
+            android:background="@drawable/circle_blue"
+            android:gravity="center"
             android:text="1"
+            android:textColor="@color/white"
             android:textSize="19dp"
             android:textStyle="bold"
             android:visibility="gone"
             tools:visibility="visible" />
 
         <TextView
-            android:background="@drawable/circle_blue"
-            android:gravity="center"
-            android:textColor="@color/white"
             android:id="@+id/secondsNumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
+            android:background="@drawable/circle_blue"
+            android:gravity="center"
             android:text="1"
+            android:textColor="@color/white"
             android:textSize="19dp"
             android:textStyle="bold"
             android:visibility="gone"
             tools:visibility="visible" />
 
         <TextView
-            android:background="@drawable/circle_red"
-            android:gravity="center"
-            android:textColor="@color/white"
             android:id="@+id/thirdNumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
+            android:background="@drawable/circle_red"
+            android:gravity="center"
             android:text="1"
+            android:textColor="@color/white"
             android:textSize="19dp"
             android:textStyle="bold"
             android:visibility="gone"
             tools:visibility="visible" />
 
         <TextView
-            android:background="@drawable/circle_yellow"
-            android:gravity="center"
-            android:textColor="@color/white"
             android:id="@+id/fourthNumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
+            android:background="@drawable/circle_yellow"
+            android:gravity="center"
             android:text="1"
+            android:textColor="@color/white"
             android:textSize="19dp"
             android:textStyle="bold"
             android:visibility="gone"
             tools:visibility="visible" />
 
         <TextView
-            android:background="@drawable/circle_gray"
-            android:gravity="center"
-            android:textColor="@color/white"
             android:id="@+id/fifthNumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
+            android:background="@drawable/circle_gray"
+            android:gravity="center"
             android:text="1"
+            android:textColor="@color/white"
             android:textSize="19dp"
             android:textStyle="bold"
             android:visibility="gone"
             tools:visibility="visible" />
 
         <TextView
-            android:gravity="center"
-            android:textColor="@color/white"
-            android:background="@drawable/circle_green"
             android:id="@+id/sixthNumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
+            android:background="@drawable/circle_green"
+            android:gravity="center"
             android:text="1"
+            android:textColor="@color/white"
             android:textSize="19dp"
             android:textStyle="bold"
             android:visibility="gone"
@@ -136,27 +145,39 @@
 
     <TextView
         android:id="@+id/percentage"
-        android:visibility="invisible"
-        tools:visibility="visible"
-        android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@+id/numberList"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="40dp"
-        android:textSize="30dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        />
-
+        android:layout_marginTop="40dp"
+        android:textSize="30dp"
+        android:textStyle="bold"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/numberList"
+        tools:visibility="visible" />
 
     <Button
-        android:id="@+id/runBtn"
+        android:id="@+id/percentageBtn"
+        android:text="당첨 확률"
+        android:layout_margin="20dp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:text="@string/autoAppear"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/webBtn"
+        />
+
+    <Button
+        android:text="이번주 당첨번호"
+        android:id="@+id/webBtn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/percentageBtn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_chainStyle="spread"
+        android:layout_margin="20dp"
+        />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
